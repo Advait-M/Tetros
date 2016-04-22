@@ -79,18 +79,100 @@ def save():
             ("TetrosSaveFile", ".txt")], title="Save game")
     sf = open(path, "w")
     sf.write(str(clearedRows)+"\n")
+    sf.write(str(len(blockCoords))+"\n")
+    for i in range(0, len(blockCoords)):
+        sf.write(str(len(blockCoords[i]))+"\n")
     sf.write(" ".join(map(str, blockCoords)))
     sf.write("\n")
     sf.write(" ".join(map(str, centres)))
     sf.write("\n")
     sf.write(" ".join(colours)+"\n")
     sf.write(str(counter)+"\n"+str(s)+"\n"+str(score)+"\n"+tetrisSong)
+    sf.write("\n")
+    sf.write(" ".join(map(str, blocks)))
+
+def turnList(l):
+    x2 = l.replace("[","")
+    x3 = x2.replace ("]","")
+    final = []
+    cur = ""
+    for i in range(0, len(x3)):
+        if x3[i] == ",":
+            final.append(int(cur))
+            cur = ""
+        else:
+            cur += x3[i]
+    x3 = list(x3)
+    x3.reverse()
+    e = x3.index(",")
+    new2 = x3[0:e]
+    new2.reverse()
+    temp = ""
+    for i in range(0, len(new2)):
+        temp += new2[i]
+    final.append(int(temp))
+    return final
 
 def loadSave():
+    global length, clearedRows, blocks3d, blockCoords, blocks, paused, predictShape, qPressed, centres, colours, floor, counter, functions, s, score, scoreP, tetrisSong
     loadGame = filedialog.askopenfilename(
         defaultextension=".txt", filetypes=[
             ("TetrosSaveFile", ".txt")], title="Load Game") # Returns Path of file
-    # for readFile in len
+    lf = open(loadGame, "r")
+    lines = lf.read()
+    llist = lines.splitlines()
+    clearedRows = int(llist[0])
+    blockCoords = []
+    curlen = int(llist[1])
+    for i in range(0, curlen):
+        temp = []
+        for j in range(0, int(llist[i+2])):
+            temp.append([[], [], [], []])
+        blockCoords.append(temp)
+    c = llist[i+3]
+    x = c.replace(",","")
+    x2 = x.replace("[","")
+    x3 = x2.replace("]","")
+    x4 = list(x3)
+    nums = []
+    temp = ""
+    for k in range(0, len(x4)):
+        if x4[k] != " ":
+            temp += x4[k]
+        else:
+            nums.append(temp)
+            temp = ""
+    x4.reverse()
+    e = x4.index(" ")
+    new2 = x4[0:e]
+    new2.reverse()
+    temp = ""
+    for i in range(0, len(new2)):
+        temp += new2[i]
+    nums.append(temp)
+    cur = 0
+    for a in range(0, len(blockCoords)):
+        for b in range(0, len(blockCoords[a])):
+            for c in range(0, len(blockCoords[a][b])):
+                blockCoords[a][b][c].append(float(nums[cur]))
+                cur += 1
+                blockCoords[a][b][c].append(float(nums[cur]))
+                cur += 1
+    col = llist[curlen+4]
+    newcol = col.split()
+    colours = []
+    for i in range(0, len(newcol)):
+        colours.append(newcol[i])
+    blockies = llist[curlen+9]
+    sblocks = blockies.split("] [")
+    blocks = []
+    for i in range(0, len(sblocks)):
+        blocks.append(turnList(sblocks[i]))
+    makeWholeCoords()
+    overlay()
+    makeTetrisRectangle()
+    sidebar()
+
 
 def setInitialValues():
     """Initializes many variables used later on in the game."""
@@ -216,10 +298,7 @@ def makeWholeCoords():
             coords = []
             for p in range(0, 4):
                 coords.append(blockCoords[i][g][p])
-            # random.choice(["red", "green", "black"]), outline = "black",
-            # width = "2")
-            blocks[i][g] = screen.create_polygon(
-                coords, fill=colours[i], outline="black", width="2")
+            blocks[i][g] = screen.create_polygon(coords, fill=colours[i], outline="black", width="2")
 
 # ROTATE WHOLE POLYGON
 
