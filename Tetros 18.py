@@ -78,7 +78,6 @@ def save():
             ("TetrosSaveFile", ".txt")], title="Save game")
     print(Test)
 ##    global length, clearedRows, blocks3d, blockCoords, blocks, paused, predictShape, qPressed, centres, colours, floor, counter, functions, s, score, scoreP, tetrisSong
-##
 
 
 def setInitialValues():
