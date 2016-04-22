@@ -163,6 +163,13 @@ def loadSave():
     colours = []
     for i in range(0, len(newcol)):
         colours.append(newcol[i])
+    counter = int(llist[curlen+5])
+    s = float(llist[curlen+6])
+    score = int(llist[curlen+7])
+    tetrisSong = llist[curlen+8]
+    winsound.PlaySound(tetrisSong, winsound.SND_FILENAME |
+                       winsound.SND_ASYNC | winsound.SND_LOOP)  # Loop the background music
+
     blockies = llist[curlen+9]
     sblocks = blockies.split("] [")
     blocks = []
