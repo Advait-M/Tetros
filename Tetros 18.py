@@ -16,7 +16,7 @@ __credits__ = ["Jason Schattman", "Huzaifa Arshad", "Gaurav Iyer", "Leon Fattakh
 __license__ = "GPL"
 __version__ = "18"
 __maintainer__ = "Advait Maybhate"
-__status__ = "unStable Release"
+__status__ = "unstable Release"
 
 
 #Create root in order to use tkinter
