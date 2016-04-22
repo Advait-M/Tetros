@@ -72,13 +72,19 @@ def exitB():
     except NameError:
         endAll()
 
-
 def save():
-    Test = filedialog.asksaveasfilename(
+    global length, clearedRows, blocks3d, blockCoords, blocks, paused, predictShape, qPressed, centres, colours, floor, counter, functions, s, score, scoreP, tetrisSong
+    path = filedialog.asksaveasfilename(
         defaultextension=".txt", filetypes=[
             ("TetrosSaveFile", ".txt")], title="Save game")
-    print(Test)
-##    global length, clearedRows, blocks3d, blockCoords, blocks, paused, predictShape, qPressed, centres, colours, floor, counter, functions, s, score, scoreP, tetrisSong
+    sf = open(path, "w")
+    sf.write(str(clearedRows)+"\n")
+    sf.write(" ".join(map(str, blockCoords)))
+    sf.write("\n")
+    sf.write(" ".join(map(str, centres)))
+    sf.write("\n")
+    sf.write(" ".join(colours)+"\n")
+    sf.write(str(counter)+"\n"+str(s)+"\n"+str(score)+"\n"+tetrisSong)
 
 def loadSave():
     loadGame = filedialog.askopenfilename(
