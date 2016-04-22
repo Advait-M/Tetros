@@ -56,7 +56,7 @@ quitB = Button(
 menubar = Menu(root)
 menuB = Menu(menubar, tearoff=0)
 menuB.add_command(label="Save Progress", command=lambda: save())
-menuB.add_command(label="Load From File")
+menuB.add_command(label="Load From File", command=lambda: loadSave())
 menuB.add_command(label="Exit", command=lambda: exitB())
 menubar.add_cascade(label="File", menu=menuB)
 root.config(menu=menubar)
@@ -80,6 +80,11 @@ def save():
     print(Test)
 ##    global length, clearedRows, blocks3d, blockCoords, blocks, paused, predictShape, qPressed, centres, colours, floor, counter, functions, s, score, scoreP, tetrisSong
 
+def loadSave():
+    loadGame = filedialog.askopenfilename(
+        defaultextension=".txt", filetypes=[
+            ("TetrosSaveFile", ".txt")], title="Load Game") # Returns Path of file
+    # for readFile in len
 
 def setInitialValues():
     """Initializes many variables used later on in the game."""
