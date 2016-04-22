@@ -56,7 +56,7 @@ quitB = Button(
 menubar = Menu(root)
 menuB = Menu(menubar, tearoff=0)
 menuB.add_command(label="Save Progress", command=lambda: save())
-menuB.add_command(label="Load From File")
+menuB.add_command(label="Load From File", command=lambda: loadSave())
 menuB.add_command(label="Exit", command=lambda: exitB())
 menubar.add_cascade(label="File", menu=menuB)
 root.config(menu=menubar)
@@ -72,6 +72,25 @@ def exitB():
     except NameError:
         endAll()
 
+def save():
+    global length, clearedRows, blocks3d, blockCoords, blocks, paused, predictShape, qPressed, centres, colours, floor, counter, functions, s, score, scoreP, tetrisSong
+    path = filedialog.asksaveasfilename(
+        defaultextension=".txt", filetypes=[
+            ("TetrosSaveFile", ".txt")], title="Save game")
+    sf = open(path, "w")
+    sf.write(str(clearedRows)+"\n")
+    sf.write(" ".join(map(str, blockCoords)))
+    sf.write("\n")
+    sf.write(" ".join(map(str, centres)))
+    sf.write("\n")
+    sf.write(" ".join(colours)+"\n")
+    sf.write(str(counter)+"\n"+str(s)+"\n"+str(score)+"\n"+tetrisSong)
+
+def loadSave():
+    loadGame = filedialog.askopenfilename(
+        defaultextension=".txt", filetypes=[
+            ("TetrosSaveFile", ".txt")], title="Load Game") # Returns Path of file
+    # for readFile in len
 
 def setInitialValues():
     """Initializes many variables used later on in the game."""
@@ -108,20 +127,6 @@ def setInitialValues():
     clearedRows = 0  # Keeps track of how many rows have been cleared
     blocks3d = PhotoImage(file="End.gif")  # Final game screen background image
 
-
-def save():
-    global length, clearedRows, blocks3d, blockCoords, blocks, paused, predictShape, qPressed, centres, colours, floor, counter, functions, s, score, scoreP, tetrisSong
-    path = filedialog.asksaveasfilename(
-        defaultextension=".txt", filetypes=[
-            ("TetrosSaveFile", ".txt")], title="Save game")
-    sf = open(path, "w")
-    sf.write(str(clearedRows)+"\n")
-    sf.write(" ".join(map(str, blockCoords)))
-    sf.write("\n")
-    sf.write(" ".join(map(str, centres)))
-    sf.write("\n")
-    sf.write(" ".join(colours)+"\n")
-    sf.write(str(counter)+"\n"+str(s)+"\n"+str(score)+"\n"+tetrisSong)
 
 def hexadecimal():
     hexadecimals = "#"
