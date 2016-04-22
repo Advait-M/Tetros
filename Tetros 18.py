@@ -2,6 +2,7 @@
 """This is a game called Tetros made with Tkinter graphics (quite similar to Tetris)."""
 # Import modules
 from tkinter import *
+from tkinter import filedialog
 import random
 import math
 import time
