@@ -43,9 +43,7 @@ def setInitialValues():
     scoreP = 0 #Actual text object of the score being displayed on the screen
     
     #Adjust background song tempo according to difficulty
-    if s >= 0.4:
-        tetrisSong = "-50%.wav"
-    elif 0.2 <= s < 0.4:
+    if 0.2 <= s:
         tetrisSong = "0%.wav"
     elif 0.1 < s < 0.2:
         tetrisSong = "50%.wav"
