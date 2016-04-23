@@ -97,13 +97,12 @@ def save():
         sf.write("\n")
         sf.write(str(pShapes))
     except NameError:
-        print("worked")
+        pass
 
 
 def turnList(l):
     x2 = l.replace("[","")
     x3 = x2.replace ("]","")
-    # print(x3)
     final = []
     cur = ""
     for i in range(0, len(x3)):
@@ -122,14 +121,12 @@ def turnList(l):
     new2 = x3[0:e]
     new2.reverse()
     temp = ""
-    # print(final)
     for i in range(0, len(new2)):
         temp += new2[i]
     try:
         final.append(int(temp))
     except ValueError:
         final.append(float(temp))
-    # print(final)
     return final
 
 def loadSave():
@@ -172,7 +169,11 @@ def loadSave():
                 temp += new2[i]
             nums.append(temp)
             cur = 0
+
             for a in range(0, len(blockCoords)):
+                if nums[cur] == "":
+                    cur += 1
+                    continue
                 for b in range(0, len(blockCoords[a])):
                     for c in range(0, len(blockCoords[a][b])):
                         blockCoords[a][b][c].append(float(nums[cur]))
@@ -181,11 +182,9 @@ def loadSave():
                         cur += 1
             cens = llist[curlen+3]
             scens = cens.split("] [")
-            # print(scens)
             centres = []
             for i in range(0, len(scens)):
                 centres.append(turnList(scens[i]))
-            print("c", centres)
             col = llist[curlen+4]
             newcol = col.split()
             colours = []
@@ -266,7 +265,11 @@ def loadSave():
             temp += new2[i]
         nums.append(temp)
         cur = 0
+
         for a in range(0, len(blockCoords)):
+            if nums[cur] == "":
+                cur += 1
+                continue
             for b in range(0, len(blockCoords[a])):
                 for c in range(0, len(blockCoords[a][b])):
                     blockCoords[a][b][c].append(float(nums[cur]))
@@ -275,11 +278,9 @@ def loadSave():
                     cur += 1
         cens = llist[curlen+3]
         scens = cens.split("] [")
-        print(scens)
         centres = []
         for i in range(0, len(scens)):
             centres.append(turnList(scens[i]))
-        print("c", centres)
         col = llist[curlen+4]
         newcol = col.split()
         colours = []
@@ -1420,6 +1421,9 @@ def keyDownHandler(event):
     # If p was pressed
     elif event.keysym == "p" or event.keysym == "P":
         changePause()  # Change the state of the paused variable; also will resume the game if the game was alrady paused
+
+    elif event.keysym == "r" or event.keysym == "R":
+        restart()
 
 
 def images():
