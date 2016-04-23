@@ -1303,6 +1303,7 @@ def restart():
 
         except ValueError:  # If it is not a float then pass
             pass
+    screen.focus_set()
 
 
 def sidebar():
