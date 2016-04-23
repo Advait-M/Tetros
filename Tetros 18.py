@@ -1283,26 +1283,20 @@ def restart():
         messagebox.showwarning(title= 'Restart Alert' , message='You currently do not have a game to restart')
     if qPressed:
         try:
-            s = float(string)  # Try to make the string entered a float
-            if s >= 0:  # If it is  non-negative
-                screen.delete(scoreP)
-                screen.delete(ALL)
+            screen.delete(ALL)
 
-                # Start the runGame proceduress
-                root.after(1, runGame)
+            # Start the runGame proceduress
+            root.after(1, runGame)
 
         except ValueError:  # If it is not a float then pass
             pass
     else:
         try:
-            s = float(string)  # Try to make the string entered a float
             ascendSky()
-            if s >= 0:  # If it is  non-negative
-                screen.delete(scoreP)
-                screen.delete(ALL)
+            screen.delete(ALL)
 
-                # Start the runGame proceduress
-                root.after(1, runGame)
+            # Start the runGame proceduress
+            root.after(1, runGame)
 
         except ValueError:  # If it is not a float then pass
             pass
