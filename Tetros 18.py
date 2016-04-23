@@ -57,11 +57,10 @@ menubar = Menu(root)
 menuB = Menu(menubar, tearoff=0)
 menuB.add_command(label="Save Progress", command=lambda: save())
 menuB.add_command(label="Load From File", command=lambda: loadSave())
-menuB.add_command(label="Restart", command=lambda: restart())
 menuB.add_command(label="Exit", command=lambda: exitB())
 menubar.add_cascade(label="File", menu=menuB)
 root.config(menu=menubar)
-string = -1
+
 
 def exitB():
     global qPressed
@@ -96,7 +95,7 @@ def save():
         sf.write("\n")
         sf.write(str(pShapes))
     except NameError:
-        pass
+        print("worked")
 
 
 def turnList(l):
@@ -219,6 +218,9 @@ def loadSave():
         else:
             pass
     except NameError:
+        loadGame = filedialog.askopenfilename(
+            defaultextension=".txt", filetypes=[
+            ("TetrosSaveFile", ".txt")], title="Load Game") # Returns Path of file
         eText.destroy()
         okayB.destroy()
         instructions.destroy()
@@ -226,11 +228,8 @@ def loadSave():
         # Pack screen and start the runGame proceduress
         screen.pack()
         screen.focus_set()
+        s = 0
         setInitialValues()  # Set up initial values
-
-        # loadGame = filedialog.askopenfilename(
-        #     defaultextension=".txt", filetypes=[
-        #         ("TetrosSaveFile", ".txt")], title="Load Game") # Returns Path of file
 
         lf = open(loadGame, "r")
         lines = lf.read()
@@ -1214,9 +1213,10 @@ def makeInstructions():
         text="Approximate difficulty for different speeds (in seconds): Easy - 0.5 Medium - 0.3 Hard - 0.1",
         font="Times 12 bold")
 
+
 def getDifficulty():
     """Gets the difficulty from the user. If they have not entered a non-negative number it does nothing."""
-    global s, string
+    global s
     string = eText.get()  # Get the text the user has entered
 
     try:
@@ -1235,27 +1235,6 @@ def getDifficulty():
 
     except ValueError:  # If it is not a float then pass
         pass
-
-def restart():
-    try:
-        s = float(string)  # Try to make the string entered a float
-        if s >= 0:  # If it is  non-negative
-            # Destroy the instructions screen, the text box and the "Next"
-            # button
-            eText.destroy()
-            okayB.destroy()
-            instructions.destroy()
-
-            # Pack screen and start the runGame proceduress
-            screen.pack()
-            screen.delete('all')
-            screen.focus_set()
-            root.after(1, runGame)
-
-    except ValueError:  # If it is not a float then pass
-        pass
-
-
 
 
 def sidebar():
