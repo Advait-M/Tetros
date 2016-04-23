@@ -1273,17 +1273,9 @@ def restart():
         s = float(string)  # Try to make the string entered a float
         ascendSky()
         if s >= 0:  # If it is  non-negative
-            # Destroy the instructions screen, the text box and the "Next"
-            # button
-            eText.destroy()
-            okayB.destroy()
-            instructions.destroy()
-
-            # Pack screen and start the runGame proceduress
-            screen.pack()
-            screen.delete(scoreP)
             screen.delete(ALL)
-            screen.focus_set()
+
+            # Start the runGame proceduress
             root.after(1, runGame)
 
     except ValueError:  # If it is not a float then pass
