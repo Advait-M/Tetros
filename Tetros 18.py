@@ -55,6 +55,11 @@ quitB = Button(
     text="Quit Tetros",
     command=lambda: endAll())
 
+restartB = Button(
+    root,
+    text="Restart Tetros",
+    command=lambda: restart())
+
 menubar = Menu(root)
 menuB = Menu(menubar, tearoff=0)
 menuB.add_command(label="Save Progress", command=lambda: save())
@@ -941,7 +946,7 @@ def endAll():
 
 def endGame():
     """Shows the user a screen with their final statistics and then destroys the game."""
-    global qPressed, screen, tetros, clearedRows, score, blocks3d
+    global qPressed, screen, tetros, clearedRows, score, blocks3d, restartB
     qPressed = True  # Make sure qPressed is true so game does not run
 
     screen.delete(ALL)  # Delete all items on the screen
@@ -988,7 +993,10 @@ def endGame():
     screen.create_image(300, 100, image=tetros)
 
     # Display "Quit Tetros" button
-    quitB_window = screen.create_window(300, 470, window=quitB)
+    quitB_window = screen.create_window(250, 470, window=quitB)
+
+    #Display "Restart Tetros" button
+    restartB_window = screen.create_window(350, 470, window=restartB)
 
     # Refresh screen
     screen.update()
