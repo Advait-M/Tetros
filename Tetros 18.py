@@ -1487,11 +1487,17 @@ def images():
 
 def changePause():
     """Changes the state of the variable paused (switches it boolean value) and resumes the game if needed."""
-    global paused
+    global paused, pausedText
     if paused:
+        screen.delete(pausedText)
+        screen.focus_set()
+        screen.update()
         paused = False
         coreGame()  # Call core game to resume the game
+
     else:
+        pausedText = screen.create_text(150,200, text='PAUSED', font = 'Times 20 bold')
+        screen.focus_set()
         paused = True
 
 
