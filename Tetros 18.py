@@ -1144,6 +1144,24 @@ def animateShape():
         # Create updated tetromino on the screen
         blocks[-1] = makePolygon(blockCoords[-1], colours[-1])
 
+def ascendSky():
+    global blockCoords, blocks, centres, colours
+    rewindSound = "rewind.wav"
+    winsound.PlaySound(rewindSound, winsound.SND_FILENAME|winsound.SND_ASYNC)
+    for r in range(0, 20):
+        for a in range(0, len(blockCoords)):
+            for b in range(0, len(blockCoords[a])):
+                for c in range(0, len(blockCoords[a][b])):
+                    blockCoords[a][b][c][1] -= 25
+        for i in range(0, len(centres)):
+            centres[i][1] -= 25
+        for h in range(0, len(blocks)):
+            for j in range(0, 4):
+                screen.delete(blocks[h][j])
+        for w in range(0, len(blocks)):
+            blocks[w] = makePolygon(blockCoords[w], colours[w])
+        screen.update()
+        time.sleep(0.1)
 
 def makeInstructions():
     """Draws images and text on the instructions screen."""
@@ -1248,10 +1266,12 @@ def getDifficulty():
         pass
 
 def restart():
+    global scoreP
     if string == -1:
         messagebox.showwarning(title= 'Restart Alert' , message='You currently do not have a game to restart')
     try:
         s = float(string)  # Try to make the string entered a float
+        ascendSky()
         if s >= 0:  # If it is  non-negative
             # Destroy the instructions screen, the text box and the "Next"
             # button
@@ -1261,7 +1281,8 @@ def restart():
 
             # Pack screen and start the runGame proceduress
             screen.pack()
-            screen.delete('all')
+            screen.delete(scoreP)
+            screen.delete(ALL)
             screen.focus_set()
             root.after(1, runGame)
 
