@@ -37,7 +37,7 @@ instructions = Canvas(
     height=600,
     background="white")  # Make instructions canvas
 # Make text box for user to enter speed at which tetrominoes should fall
-eText = Combobox(root, font="Times 20 bold", values=["Hard - 0.1", "Medium - 0.3", "Easy - 0.5"])
+eText = Combobox(root, font="Times 20 bold", values=["Easy - 0.5", "Medium - 0.3", "Hard - 0.1"])
 # Make button for user to click in order to advance to the game screen
 okayB = Button(
     root,
