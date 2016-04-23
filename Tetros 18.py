@@ -3,6 +3,7 @@
 # Import modules
 from tkinter import *
 from tkinter import filedialog
+from tkinter import messagebox
 import random
 import math
 import time
@@ -97,7 +98,7 @@ def save():
         sf.write("\n")
         sf.write(str(pShapes))
     except NameError:
-        pass
+       messagebox.showwarning(title= 'Save Alert' , message='Sorry but you cannot save at this moment')
 
 
 def turnList(l):
@@ -217,7 +218,7 @@ def loadSave():
             makeTetrisRectangle()
             sidebar()
         else:
-            pass
+            messagebox.showwarning(title= 'Load Alert' , message='Sorry but you cannot load a save file at this moment')
     except NameError:
         loadGame = filedialog.askopenfilename(
             defaultextension=".txt", filetypes=[
@@ -1238,6 +1239,8 @@ def getDifficulty():
         pass
 
 def restart():
+    if string == -1:
+        messagebox.showwarning(title= 'Restart Alert' , message='You currently do not have a game to restart')
     try:
         s = float(string)  # Try to make the string entered a float
         if s >= 0:  # If it is  non-negative
