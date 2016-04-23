@@ -1273,6 +1273,7 @@ def restart():
         s = float(string)  # Try to make the string entered a float
         ascendSky()
         if s >= 0:  # If it is  non-negative
+            screen.delete(scoreP)
             screen.delete(ALL)
 
             # Start the runGame proceduress
