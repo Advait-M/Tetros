@@ -1271,7 +1271,7 @@ def restart():
 
 def sidebar():
     """Draws the side panel in the main game screen, specifically the controls."""
-    global left, tetrosSmall, right, up, down, xImage, zImage, pImage, qImage
+    global left, tetrosSmall, right, up, down, xImage, zImage, pImage, qImage, rImage
     screen.create_text(
         440,
         275,
@@ -1287,6 +1287,7 @@ def sidebar():
     screen.create_image(470, 425, image=qImage)
     screen.create_image(470, 325, image=zImage)
     screen.create_image(350, 425, image=xImage)
+    screen.create_image(470, 475, image=rImage)
 
     # Explain what each control does
     screen.create_text(535, 315, text="Rotate", font="Times 10 bold")
@@ -1297,11 +1298,8 @@ def sidebar():
     screen.create_text(360, 325, text="Move Right", font="Times 10 bold")
     screen.create_text(410, 415, text="Rotate", font="Times 10 bold")
     screen.create_text(410, 435, text="Clockwise", font="Times 10 bold")
-    screen.create_text(
-        385,
-        475,
-        text="Accelerate Tetromino",
-        font="Times 10 bold")
+    screen.create_text(385, 475, text="Accelerate Tetromino",font="Times 10 bold")
+    screen.create_text(535, 475, text="Restart Game", font= "Times 10 bold")
 
     # Create Tetros logo
     screen.create_image(440, 45, image=tetrosSmall)
@@ -1438,7 +1436,7 @@ def keyDownHandler(event):
 
 def images():
     """Assigns images to many variables."""
-    global tetros, background, left, right, tetrosSmall, up, down, xImage, zImage, pImage, qImage
+    global tetros, background, left, right, tetrosSmall, up, down, xImage, zImage, pImage, qImage, rImage
     tetros = PhotoImage(file="Tetros.gif")
     background = PhotoImage(file="background.gif")
     left = PhotoImage(file="left.gif")
@@ -1450,6 +1448,7 @@ def images():
     zImage = PhotoImage(file="Z.gif")
     pImage = PhotoImage(file="P.gif")
     qImage = PhotoImage(file="Q.gif")
+    rImage = PhotoImage(file="R.gif")
 
 
 def changePause():
