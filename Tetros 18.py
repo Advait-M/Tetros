@@ -1485,7 +1485,7 @@ def interfaceButtons():
     buttonQuit = Button(root, text="Quit Game", command=lambda: endGame())
     buttonQuit.config(bd=5)
     # Create the quit button on the screen
-    buttonQuit_window = screen.create_window(400, 240, window=buttonQuit)
+    buttonQuit_window = screen.create_window(350, 240, window=buttonQuit)
 
     # Create pause button and assign it to the changePause function
     buttonPause = Button(
@@ -1494,8 +1494,11 @@ def interfaceButtons():
         command=lambda: changePause())
     buttonPause.config(bd=5)
     # Create the pause button on the screen
-    buttonPause_window = screen.create_window(500, 240, window=buttonPause)
-
+    buttonPause_window = screen.create_window(450, 240, window=buttonPause)
+    # Restart button
+    buttonRestart =  Button(root, text="Restart Game", command=lambda: restart())
+    buttonRestart.config(bd=5)
+    buttonRestart = screen.create_window(550, 240, window=buttonRestart)
 
 def runGame():
     """Runs initializing functions and then runs the core functions of the game."""
