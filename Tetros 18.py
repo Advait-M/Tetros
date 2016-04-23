@@ -73,7 +73,7 @@ def exitB():
         endAll()
 
 def save():
-    global length, clearedRows, blocks3d, blockCoords, blocks, paused, predictShape, qPressed, centres, colours, floor, counter, functions, s, score, scoreP, tetrisSong
+    global length, clearedRows, blocks3d, blockCoords, blocks, paused, predictShape, qPressed, centres, colours, floor, counter, functions, s, score, scoreP, tetrisSong, pShapes
     path = filedialog.asksaveasfilename(
         defaultextension=".txt", filetypes=[
             ("TetrosSaveFile", ".txt")], title="Save game")
@@ -90,6 +90,9 @@ def save():
     sf.write(str(counter)+"\n"+str(s)+"\n"+str(score)+"\n"+tetrisSong)
     sf.write("\n")
     sf.write(" ".join(map(str, blocks)))
+    sf.write("\n")
+    sf.write(str(pShapes))
+
 
 def turnList(l):
     x2 = l.replace("[","")
@@ -114,7 +117,7 @@ def turnList(l):
     return final
 
 def loadSave():
-    global length, clearedRows, blocks3d, blockCoords, blocks, paused, predictShape, qPressed, centres, colours, floor, counter, functions, s, score, scoreP, tetrisSong
+    global length, clearedRows, blocks3d, blockCoords, blocks, paused, predictShape, qPressed, centres, colours, floor, counter, functions, s, score, scoreP, tetrisSong, pShapes
     loadGame = filedialog.askopenfilename(
         defaultextension=".txt", filetypes=[
             ("TetrosSaveFile", ".txt")], title="Load Game") # Returns Path of file
@@ -175,8 +178,18 @@ def loadSave():
     blocks = []
     for i in range(0, len(sblocks)):
         blocks.append(turnList(sblocks[i]))
+
+    snext = llist[curlen+10]
+    pShapes = []
+    for i in range(0, len(snext)-2):
+        if snext[i] == "[":
+            pShapes.append(snext[i+2])
+        elif snext[i] == ",":
+            pShapes.append(snext[i+3])
+
     makeWholeCoords()
     overlay()
+    showNext()
     makeTetrisRectangle()
     sidebar()
 
