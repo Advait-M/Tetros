@@ -22,7 +22,7 @@ __credits__ = [
     "Leon Fattakhov",
     "Zach Chapman"]
 __license__ = "GPL"
-__version__ = "18"
+__version__ = "20"
 __maintainer__ = "Advait Maybhate"
 __status__ = "Unstable Release"
 
