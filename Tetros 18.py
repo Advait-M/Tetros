@@ -82,21 +82,24 @@ def save():
         path = filedialog.asksaveasfilename(
             defaultextension=".txt", filetypes=[
                 ("TetrosSaveFile", ".txt")], title="Save game")
-        sf = open(path, "w")
-        sf.write(str(clearedRows)+"\n")
-        sf.write(str(len(blockCoords))+"\n")
-        for i in range(0, len(blockCoords)):
-            sf.write(str(len(blockCoords[i]))+"\n")
-        sf.write(" ".join(map(str, blockCoords)))
-        sf.write("\n")
-        sf.write(" ".join(map(str, centres)))
-        sf.write("\n")
-        sf.write(" ".join(colours)+"\n")
-        sf.write(str(counter)+"\n"+str(s)+"\n"+str(score)+"\n"+tetrisSong)
-        sf.write("\n")
-        sf.write(" ".join(map(str, blocks)))
-        sf.write("\n")
-        sf.write(str(pShapes))
+        try:
+            sf = open(path, "w")
+            sf.write(str(clearedRows)+"\n")
+            sf.write(str(len(blockCoords))+"\n")
+            for i in range(0, len(blockCoords)):
+                sf.write(str(len(blockCoords[i]))+"\n")
+            sf.write(" ".join(map(str, blockCoords)))
+            sf.write("\n")
+            sf.write(" ".join(map(str, centres)))
+            sf.write("\n")
+            sf.write(" ".join(colours)+"\n")
+            sf.write(str(counter)+"\n"+str(s)+"\n"+str(score)+"\n"+tetrisSong)
+            sf.write("\n")
+            sf.write(" ".join(map(str, blocks)))
+            sf.write("\n")
+            sf.write(str(pShapes))
+        except FileNotFoundError:
+            pass
     except NameError:
        messagebox.showwarning(title= 'Save Alert' , message='Sorry but you cannot save at this moment')
 
@@ -137,7 +140,108 @@ def loadSave():
             loadGame = filedialog.askopenfilename(
                 defaultextension=".txt", filetypes=[
                     ("TetrosSaveFile", ".txt")], title="Load Game") # Returns Path of file
+            try:
+                lf = open(loadGame, "r")
+                lines = lf.read()
+                llist = lines.splitlines()
+                clearedRows = int(llist[0])
+                blockCoords = []
+                curlen = int(llist[1])
+                for i in range(0, curlen):
+                    temp = []
+                    for j in range(0, int(llist[i+2])):
+                        temp.append([[], [], [], []])
+                    blockCoords.append(temp)
+                c = llist[curlen+2]
+                x = c.replace(",","")
+                x2 = x.replace("[","")
+                x3 = x2.replace("]","")
+                x4 = list(x3)
+                nums = []
+                temp = ""
+                for k in range(0, len(x4)):
+                    if x4[k] != " ":
+                        temp += x4[k]
+                    else:
+                        nums.append(temp)
+                        temp = ""
+                x4.reverse()
+                e = x4.index(" ")
+                new2 = x4[0:e]
+                new2.reverse()
+                temp = ""
+                for i in range(0, len(new2)):
+                    temp += new2[i]
+                nums.append(temp)
+                cur = 0
+
+                for a in range(0, len(blockCoords)):
+                    if nums[cur] == "":
+                        cur += 1
+                        continue
+                    for b in range(0, len(blockCoords[a])):
+                        for c in range(0, len(blockCoords[a][b])):
+                            blockCoords[a][b][c].append(float(nums[cur]))
+                            cur += 1
+                            blockCoords[a][b][c].append(float(nums[cur]))
+                            cur += 1
+                cens = llist[curlen+3]
+                scens = cens.split("] [")
+                centres = []
+                for i in range(0, len(scens)):
+                    centres.append(turnList(scens[i]))
+                col = llist[curlen+4]
+                newcol = col.split()
+                colours = []
+                for i in range(0, len(newcol)):
+                    colours.append(newcol[i])
+                counter = int(llist[curlen+5])
+                s = float(llist[curlen+6])
+                score = int(llist[curlen+7])
+                tetrisSong = llist[curlen+8]
+                winsound.PlaySound(tetrisSong, winsound.SND_FILENAME |
+                                   winsound.SND_ASYNC | winsound.SND_LOOP)  # Loop the background music
+
+                blockies = llist[curlen+9]
+                sblocks = blockies.split("] [")
+                blocks = []
+                for i in range(0, len(sblocks)):
+                    blocks.append(turnList(sblocks[i]))
+
+                snext = llist[curlen+10]
+                pShapes = []
+                for i in range(0, len(snext)-2):
+                    if snext[i] == "[":
+                        pShapes.append(snext[i+2])
+                    elif snext[i] == ",":
+                        pShapes.append(snext[i+3])
+
+                makeWholeCoords()
+                overlay()
+                showNext()
+                makeTetrisRectangle()
+                sidebar()
+            except FileNotFoundError:
+                pass
+
+        else:
+            messagebox.showwarning(title= 'Load Alert' , message='Sorry but you cannot load a save file at this moment')
+    except NameError:
+        try:
+            loadGame = filedialog.askopenfilename(
+                defaultextension=".txt", filetypes=[
+                ("TetrosSaveFile", ".txt")], title="Load Game") # Returns Path of file
             lf = open(loadGame, "r")
+            eText.destroy()
+            okayB.destroy()
+            instructions.destroy()
+
+            # Pack screen and start the runGame proceduress
+            screen.pack()
+            screen.focus_set()
+            s = 0
+            setInitialValues()  # Set up initial values
+
             lines = lf.read()
             llist = lines.splitlines()
             clearedRows = int(llist[0])
@@ -217,104 +321,9 @@ def loadSave():
             showNext()
             makeTetrisRectangle()
             sidebar()
-        else:
-            messagebox.showwarning(title= 'Load Alert' , message='Sorry but you cannot load a save file at this moment')
-    except NameError:
-        loadGame = filedialog.askopenfilename(
-            defaultextension=".txt", filetypes=[
-            ("TetrosSaveFile", ".txt")], title="Load Game") # Returns Path of file
-        eText.destroy()
-        okayB.destroy()
-        instructions.destroy()
-
-        # Pack screen and start the runGame proceduress
-        screen.pack()
-        screen.focus_set()
-        s = 0
-        setInitialValues()  # Set up initial values
-
-        lf = open(loadGame, "r")
-        lines = lf.read()
-        llist = lines.splitlines()
-        clearedRows = int(llist[0])
-        blockCoords = []
-        curlen = int(llist[1])
-        for i in range(0, curlen):
-            temp = []
-            for j in range(0, int(llist[i+2])):
-                temp.append([[], [], [], []])
-            blockCoords.append(temp)
-        c = llist[curlen+2]
-        x = c.replace(",","")
-        x2 = x.replace("[","")
-        x3 = x2.replace("]","")
-        x4 = list(x3)
-        nums = []
-        temp = ""
-        for k in range(0, len(x4)):
-            if x4[k] != " ":
-                temp += x4[k]
-            else:
-                nums.append(temp)
-                temp = ""
-        x4.reverse()
-        e = x4.index(" ")
-        new2 = x4[0:e]
-        new2.reverse()
-        temp = ""
-        for i in range(0, len(new2)):
-            temp += new2[i]
-        nums.append(temp)
-        cur = 0
-
-        for a in range(0, len(blockCoords)):
-            if nums[cur] == "":
-                cur += 1
-                continue
-            for b in range(0, len(blockCoords[a])):
-                for c in range(0, len(blockCoords[a][b])):
-                    blockCoords[a][b][c].append(float(nums[cur]))
-                    cur += 1
-                    blockCoords[a][b][c].append(float(nums[cur]))
-                    cur += 1
-        cens = llist[curlen+3]
-        scens = cens.split("] [")
-        centres = []
-        for i in range(0, len(scens)):
-            centres.append(turnList(scens[i]))
-        col = llist[curlen+4]
-        newcol = col.split()
-        colours = []
-        for i in range(0, len(newcol)):
-            colours.append(newcol[i])
-        counter = int(llist[curlen+5])
-        s = float(llist[curlen+6])
-        score = int(llist[curlen+7])
-        tetrisSong = llist[curlen+8]
-        winsound.PlaySound(tetrisSong, winsound.SND_FILENAME |
-                           winsound.SND_ASYNC | winsound.SND_LOOP)  # Loop the background music
-
-        blockies = llist[curlen+9]
-        sblocks = blockies.split("] [")
-        blocks = []
-        for i in range(0, len(sblocks)):
-            blocks.append(turnList(sblocks[i]))
-
-        snext = llist[curlen+10]
-        pShapes = []
-        for i in range(0, len(snext)-2):
-            if snext[i] == "[":
-                pShapes.append(snext[i+2])
-            elif snext[i] == ",":
-                pShapes.append(snext[i+3])
-
-        makeWholeCoords()
-        overlay()
-        showNext()
-        makeTetrisRectangle()
-        sidebar()
-        coreGame()
-
+            coreGame()
+        except FileNotFoundError:
+            pass
 def setInitialValues():
     """Initializes many variables used later on in the game."""
     global length, clearedRows, blocks3d, blockCoords, blocks, paused, predictShape, qPressed, centres, colours, floor, counter, functions, s, score, scoreP, tetrisSong
