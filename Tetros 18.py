@@ -1156,20 +1156,23 @@ def ascendSky():
     global blockCoords, blocks, centres, colours
     rewindSound = "rewind.wav"
     winsound.PlaySound(rewindSound, winsound.SND_FILENAME|winsound.SND_ASYNC)
-    for r in range(0, 20):
-        for a in range(0, len(blockCoords)):
-            for b in range(0, len(blockCoords[a])):
-                for c in range(0, len(blockCoords[a][b])):
-                    blockCoords[a][b][c][1] -= 25
-        for i in range(0, len(centres)):
-            centres[i][1] -= 25
-        for h in range(0, len(blocks)):
-            for j in range(0, 4):
-                screen.delete(blocks[h][j])
-        for w in range(0, len(blocks)):
-            blocks[w] = makePolygon(blockCoords[w], colours[w])
-        screen.update()
-        time.sleep(0.1)
+    try:
+        for r in range(0, 20):
+            for a in range(0, len(blockCoords)):
+                for b in range(0, len(blockCoords[a])):
+                    for c in range(0, len(blockCoords[a][b])):
+                        blockCoords[a][b][c][1] -= 25
+            for i in range(0, len(centres)):
+                centres[i][1] -= 25
+            for h in range(0, len(blocks)):
+                for j in range(0, 4):
+                    screen.delete(blocks[h][j])
+            for w in range(0, len(blocks)):
+                blocks[w] = makePolygon(blockCoords[w], colours[w])
+            screen.update()
+            time.sleep(0.1)
+    except IndexError:
+        pass
 
 def makeInstructions():
     """Draws images and text on the instructions screen."""
