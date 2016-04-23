@@ -875,10 +875,8 @@ def checkRow():
                             0, 25):  # Loop through the particles in each explosion (25)
                         # Use trigonometry to calculate te x and y position of
                         # the specific particle
-                        xP[i][q] = explodeCentres[i][0] + \
-                            r[i][q] * math.cos(angles[i][q])
-                        yP[i][q] = explodeCentres[i][1] - \
-                            r[i][q] * math.sin(angles[i][q])
+                        xP[i][q] = explodeCentres[i][0] + r[i][q] * math.cos(angles[i][q])
+                        yP[i][q] = explodeCentres[i][1] - r[i][q] * math.sin(angles[i][q])
                         # Increase the particles radius by whatever speed it is
                         # going at
                         r[i][q] = r[i][q] + rSpeeds[i][q]
