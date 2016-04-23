@@ -29,6 +29,7 @@ __status__ = "Unstable Release"
 
 # Create root in order to use tkinter
 root = Tk()
+Style().configure("TButton", padding=6, relief="flat", background="#33cc33")
 root.title(string="Tetros")  # Title window with game name
 instructions = Canvas(
     root,
@@ -36,13 +37,13 @@ instructions = Canvas(
     height=600,
     background="white")  # Make instructions canvas
 # Make text box for user to enter speed at which tetrominoes should fall
-eText = Entry(root, font="Times 20 bold")
+eText = Combobox(root, font="Times 20 bold", values=["Hard - 0.1", "Medium - 0.3", "Easy - 0.5"])
 # Make button for user to click in order to advance to the game screen
 okayB = Button(
     root,
     text="Begin!",
     command=lambda: getDifficulty())
-Style().configure("TButton", padding=6, relief="flat", background="#33cc33")
+
 screen = Canvas(
     root,
     width=600,
@@ -1246,7 +1247,8 @@ def getDifficulty():
     """Gets the difficulty from the user. If they have not entered a non-negative number it does nothing."""
     global s, string
     string = eText.get()  # Get the text the user has entered
-
+    if string == "Easy - 0.5" or string == "Medium - 0.3" or string == "Hard - 0.1":
+        string = string[-2:]
     try:
         s = float(string)  # Try to make the string entered a float
         if s >= 0:  # If it is  non-negative
@@ -1487,7 +1489,7 @@ def initialScreen():
     eText_window = instructions.create_window(400, 580, window=eText)
     eText.focus_set()  # Focus automatically to the text box
     # Put the "Begin!" button on the instructions screen
-    okayB_window = instructions.create_window(590, 580, window=okayB)
+    okayB_window = instructions.create_window(600, 580, window=okayB)
 
 
 def interfaceButtons():
