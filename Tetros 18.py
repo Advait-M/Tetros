@@ -57,10 +57,11 @@ menubar = Menu(root)
 menuB = Menu(menubar, tearoff=0)
 menuB.add_command(label="Save Progress", command=lambda: save())
 menuB.add_command(label="Load From File", command=lambda: loadSave())
+menuB.add_command(label="Restart", command=lambda: restart())
 menuB.add_command(label="Exit", command=lambda: exitB())
 menubar.add_cascade(label="File", menu=menuB)
 root.config(menu=menubar)
-
+string = -1
 
 def exitB():
     global qPressed
@@ -1213,10 +1214,9 @@ def makeInstructions():
         text="Approximate difficulty for different speeds (in seconds): Easy - 0.5 Medium - 0.3 Hard - 0.1",
         font="Times 12 bold")
 
-
 def getDifficulty():
     """Gets the difficulty from the user. If they have not entered a non-negative number it does nothing."""
-    global s
+    global s, string
     string = eText.get()  # Get the text the user has entered
 
     try:
@@ -1235,6 +1235,27 @@ def getDifficulty():
 
     except ValueError:  # If it is not a float then pass
         pass
+
+def restart():
+    try:
+        s = float(string)  # Try to make the string entered a float
+        if s >= 0:  # If it is  non-negative
+            # Destroy the instructions screen, the text box and the "Next"
+            # button
+            eText.destroy()
+            okayB.destroy()
+            instructions.destroy()
+
+            # Pack screen and start the runGame proceduress
+            screen.pack()
+            screen.delete('all')
+            screen.focus_set()
+            root.after(1, runGame)
+
+    except ValueError:  # If it is not a float then pass
+        pass
+
+
 
 
 def sidebar():
