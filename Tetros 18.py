@@ -4,6 +4,7 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
+from tkinter.ttk import *
 import random
 import math
 import time
@@ -35,13 +36,13 @@ instructions = Canvas(
     height=600,
     background="white")  # Make instructions canvas
 # Make text box for user to enter speed at which tetrominoes should fall
-eText = Entry(root, font="Times 20 bold", fg="green")
+eText = Entry(root, font="Times 20 bold")
 # Make button for user to click in order to advance to the game screen
 okayB = Button(
     root,
     text="Begin!",
-    font="Times 12 bold",
     command=lambda: getDifficulty())
+Style().configure("TButton", padding=6, relief="flat", background="#33cc33")
 screen = Canvas(
     root,
     width=600,
@@ -51,7 +52,6 @@ screen = Canvas(
 quitB = Button(
     root,
     text="Quit Tetros",
-    font="Times 12 bold",
     command=lambda: endAll())
 
 menubar = Menu(root)
@@ -987,7 +987,6 @@ def endGame():
     screen.create_image(300, 100, image=tetros)
 
     # Display "Quit Tetros" button
-    quitB.config(bd=5)
     quitB_window = screen.create_window(300, 470, window=quitB)
 
     # Refresh screen
@@ -1487,16 +1486,14 @@ def initialScreen():
     # Put the text box in the instructions screen
     eText_window = instructions.create_window(400, 580, window=eText)
     eText.focus_set()  # Focus automatically to the text box
-    okayB.config(bd=5)
     # Put the "Begin!" button on the instructions screen
-    okayB_window = instructions.create_window(580, 580, window=okayB)
+    okayB_window = instructions.create_window(590, 580, window=okayB)
 
 
 def interfaceButtons():
     """Creates the pause and quit buttons in the game interface."""
     # Create quit button and assign it to endGame function
     buttonQuit = Button(root, text="Quit Game", command=lambda: endGame())
-    buttonQuit.config(bd=5)
     # Create the quit button on the screen
     buttonQuit_window = screen.create_window(335, 240, window=buttonQuit)
 
@@ -1505,12 +1502,10 @@ def interfaceButtons():
         root,
         text="Pause Game",
         command=lambda: changePause())
-    buttonPause.config(bd=5)
     # Create the pause button on the screen
     buttonPause_window = screen.create_window(435, 240, window=buttonPause)
     # Restart button
     buttonRestart =  Button(root, text="Restart Game", command=lambda: restart())
-    buttonRestart.config(bd=5)
     buttonRestart = screen.create_window(535, 240, window=buttonRestart)
 
 def runGame():
