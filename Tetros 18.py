@@ -24,7 +24,7 @@ __credits__ = [
 __license__ = "GPL"
 __version__ = "20"
 __maintainer__ = "Advait Maybhate"
-__status__ = "Unstable Release"
+__status__ = "Stable Release"
 
 
 # Create root in order to use tkinter
