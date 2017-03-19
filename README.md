@@ -6,9 +6,9 @@ To begin, the user must read the instructions screen that pops up. At the bottom
 
 ## Scoring
 The scoring is as follows:
-*New tetromino = 8 points
-*Cleared row = 20 points  
-*Accelerating the tetromino = 1 point (each time)
+* New tetromino = 8 points
+* Cleared row = 20 points  
+* Accelerating the tetromino = 1 point (each time)
 
 ## Instructions for play
 Open the game file by opening the Python file “Tetros.py” (this file is located inside the “Tetros” folder). Next, to launch the game, push F5 or press “Run module” under the “Run” menu located at the top left of the window.
